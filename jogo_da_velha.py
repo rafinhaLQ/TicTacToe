@@ -10,8 +10,9 @@ COR_AZUL = (255, 0, 0)
 COR_VERMELHA = (0, 0, 255)
 COR_AMARELA = (0, 255, 255)
 RAIO = 125
-TITULO_DA_JANELA = "JOGO DA VELHA"
-TEXTO_JOGAR_MENU = "( APERTE NA TELA PARA JOGAR )"
+NOME_JOGO = "JOGO DA VELHA"
+TEXTO_SAIR = "( APERTE ESC PARA SAIR )"
+TEXTO_JOGAR_NOVAMENTE = "( APERTE NA TELA PARA JOGAR NOVAMENTE )"
 
 
 # Variaveis globais
@@ -20,6 +21,7 @@ janela = janela_vazia.copy()
 posicoes_marcadas = np.zeros((3, 3))
 turno_jogador = 1
 comecou_jogo = False
+jogar_novamente = False
 
 
 def desenha_grade():
@@ -35,8 +37,17 @@ def desenha_grade():
 def mouse_callback(evt, x, y, flags, param):
     global comecou_jogo
     global janela
+    global posicoes_marcadas
+    global turno_jogador
+    global jogar_novamente
     if evt == cv2.EVENT_LBUTTONDOWN:
-        if comecou_jogo:
+        if jogar_novamente:
+            posicoes_marcadas = np.zeros((3, 3))
+            turno_jogador = 1
+            jogar_novamente = False
+            janela = janela_vazia.copy()
+            desenha_grade()
+        elif comecou_jogo:
             evento_jogo(x, y)
         else:
             comecou_jogo = True
@@ -91,9 +102,10 @@ def verifica_velha() -> bool:
 
 def inicia_jogo_da_velha():
     global janela
+    global jogar_novamente
     cv2.putText(
         janela,
-        TITULO_DA_JANELA,
+        NOME_JOGO,
         (30, 450),
         cv2.FONT_HERSHEY_PLAIN,
         6.7,
@@ -102,16 +114,25 @@ def inicia_jogo_da_velha():
     )
     cv2.putText(
         janela,
-        TEXTO_JOGAR_MENU,
+        "( APERTE NA TELA PARA JOGAR )",
         (315, 500),
         cv2.FONT_HERSHEY_PLAIN,
         1,
         COR_AMARELA,
         ESPESSURA,
     )
+    cv2.putText(
+        janela,
+        "( APERTE ESC A QUALQUER MOMENTO PARA SAIR )",
+        (250, 550),
+        cv2.FONT_HERSHEY_PLAIN,
+        1,
+        COR_AMARELA,
+        ESPESSURA,
+    )
     while True:
-        cv2.imshow(TITULO_DA_JANELA, janela)
-        cv2.setMouseCallback(TITULO_DA_JANELA, mouse_callback)
+        cv2.imshow(NOME_JOGO, janela)
+        cv2.setMouseCallback(NOME_JOGO, mouse_callback)
         if cv2.waitKey(10) & 0xFF == 27:
             break
 
@@ -128,13 +149,25 @@ def inicia_jogo_da_velha():
             )
             cv2.putText(
                 janela,
-                "( APERTE ESC PARA SAIR )",
-                (350, 500),
+                TEXTO_JOGAR_NOVAMENTE,
+                (270, 500),
                 cv2.FONT_HERSHEY_PLAIN,
                 1,
                 COR_AMARELA,
                 ESPESSURA,
             )
+            cv2.putText(
+                janela,
+                TEXTO_SAIR,
+                (350, 550),
+                cv2.FONT_HERSHEY_PLAIN,
+                1,
+                COR_AMARELA,
+                ESPESSURA,
+            )
+
+            jogar_novamente = True
+
         if verifica_velha():
             janela = janela_vazia.copy()
             cv2.putText(
@@ -148,13 +181,24 @@ def inicia_jogo_da_velha():
             )
             cv2.putText(
                 janela,
-                "( APERTE ESC PARA SAIR )",
-                (350, 500),
+                TEXTO_JOGAR_NOVAMENTE,
+                (270, 500),
                 cv2.FONT_HERSHEY_PLAIN,
                 1,
                 COR_AMARELA,
                 ESPESSURA,
             )
+            cv2.putText(
+                janela,
+                TEXTO_SAIR,
+                (350, 550),
+                cv2.FONT_HERSHEY_PLAIN,
+                1,
+                COR_AMARELA,
+                ESPESSURA,
+            )
+
+            jogar_novamente = True
 
     cv2.destroyAllWindows()
 

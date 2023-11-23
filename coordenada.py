@@ -16,22 +16,22 @@ class Coordenada:
 
     @staticmethod
     def retorna_quadrante(x, y):
-        if (x > 30 and x < 270) and (y > 30 and y < 270):
-            return Quadrante("Quadrante 1")
-        elif (x > 330 and x < 570) and (y > 30 and y < 270):
-            return Quadrante("Quadrante 2")
-        elif (x > 630 and x < 870) and (y > 30 and y < 270):
-            return Quadrante("Quadrante 3")
-        elif (x > 30 and x < 270) and (y > 330 and y < 570):
-            return Quadrante("Quadrante 4")
-        elif (x > 330 and x < 570) and (y > 330 and y < 570):
-            return Quadrante("Quadrante 5")
-        elif (x > 630 and x < 870) and (y > 330 and y < 570):
-            return Quadrante("Quadrante 6")
-        elif (x > 30 and x < 270) and (y > 630 and y < 870):
-            return Quadrante("Quadrante 7")
-        elif (x > 330 and x < 570) and (y > 630 and y < 870):
-            return Quadrante("Quadrante 8")
-        elif (x > 630 and x < 870) and (y > 630 and y < 870):
-            return Quadrante("Quadrante 9")
-        return None
+        x_processado = Coordenada.processa_coordenada(x)
+        y_processado = Coordenada.processa_coordenada(y)
+
+        if x_processado == 0 or y_processado == 0:
+            return None
+
+        quadrante = (y_processado - 1) * 3 + x_processado
+
+        return Quadrante(f"Quadrante {quadrante}")
+
+    @staticmethod
+    def processa_coordenada(cord) -> int:
+        if cord > 30 and cord < 270:
+            return 1
+        if cord > 330 and cord < 270:
+            return 2
+        if cord > 630 and cord < 870:
+            return 3
+        return 0
