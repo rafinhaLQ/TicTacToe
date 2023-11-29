@@ -30,7 +30,7 @@ class Coordenada:
     def processa_coordenada(cord) -> int:
         if cord > 30 and cord < 270:
             return 1
-        if cord > 330 and cord < 270:
+        if cord > 330 and cord < 570:
             return 2
         if cord > 630 and cord < 870:
             return 3

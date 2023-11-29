@@ -86,7 +86,7 @@ class Quadrante(Enum):
 
     def __new__(
         cls,
-        quadrante,
+        value,
         centro,
         ponto_x_1_inic,
         ponto_x_1_fim,
@@ -94,13 +94,12 @@ class Quadrante(Enum):
         ponto_x_2_fim,
         posicao,
     ):
-        objeto = object.__new__(cls)
-        objeto._value_ = quadrante
-        objeto.quadrante = quadrante
-        objeto.centro = centro
-        objeto.ponto_x_1_inic = ponto_x_1_inic
-        objeto.ponto_x_1_fim = ponto_x_1_fim
-        objeto.ponto_x_2_inic = ponto_x_2_inic
-        objeto.ponto_x_2_fim = ponto_x_2_fim
-        objeto.posicao = posicao
-        return objeto
+        obj = object.__new__(cls)
+        obj._value_ = value
+        obj.centro = centro
+        obj.ponto_x_1_inic = ponto_x_1_inic
+        obj.ponto_x_1_fim = ponto_x_1_fim
+        obj.ponto_x_2_inic = ponto_x_2_inic
+        obj.ponto_x_2_fim = ponto_x_2_fim
+        obj.posicao = posicao
+        return obj

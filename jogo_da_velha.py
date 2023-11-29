@@ -94,15 +94,85 @@ def verifica_vitoria() -> bool:
     return False
 
 
+def vitoria():
+    global janela
+    global jogar_novamente
+    
+    janela = janela_vazia.copy()
+    cv2.putText(
+        janela,
+        f"JOGADOR {3 - turno_jogador} GANHOU!",
+        (30, 450),
+        cv2.FONT_HERSHEY_PLAIN,
+        5.1,
+        COR_BRANCA,
+        ESPESSURA,
+    )
+    cv2.putText(
+        janela,
+        TEXTO_JOGAR_NOVAMENTE,
+        (270, 500),
+        cv2.FONT_HERSHEY_PLAIN,
+        1,
+        COR_AMARELA,
+        ESPESSURA,
+    )
+    cv2.putText(
+        janela,
+        TEXTO_SAIR,
+        (350, 550),
+        cv2.FONT_HERSHEY_PLAIN,
+        1,
+        COR_AMARELA,
+        ESPESSURA,
+    )
+
+    jogar_novamente = True
+
+
 def verifica_velha() -> bool:
     if np.all(posicoes_marcadas) != 0:
         return True
     return False
 
 
-def inicia_jogo_da_velha():
+def velha():
     global janela
     global jogar_novamente
+    
+    janela = janela_vazia.copy()
+    cv2.putText(
+        janela,
+        "DEU VELHA!",
+        (210, 450),
+        cv2.FONT_HERSHEY_PLAIN,
+        5.1,
+        COR_BRANCA,
+        ESPESSURA,
+    )
+    cv2.putText(
+        janela,
+        TEXTO_JOGAR_NOVAMENTE,
+        (270, 500),
+        cv2.FONT_HERSHEY_PLAIN,
+        1,
+        COR_AMARELA,
+        ESPESSURA,
+    )
+    cv2.putText(
+        janela,
+        TEXTO_SAIR,
+        (350, 550),
+        cv2.FONT_HERSHEY_PLAIN,
+        1,
+        COR_AMARELA,
+        ESPESSURA,
+    )
+
+    jogar_novamente = True
+
+
+def exibe_menu_inicial():
     cv2.putText(
         janela,
         NOME_JOGO,
@@ -130,6 +200,14 @@ def inicia_jogo_da_velha():
         COR_AMARELA,
         ESPESSURA,
     )
+
+
+def inicia_jogo_da_velha():
+    global janela
+    global jogar_novamente
+    
+    exibe_menu_inicial()
+    
     while True:
         cv2.imshow(NOME_JOGO, janela)
         cv2.setMouseCallback(NOME_JOGO, mouse_callback)
@@ -137,68 +215,10 @@ def inicia_jogo_da_velha():
             break
 
         if verifica_vitoria():
-            janela = janela_vazia.copy()
-            cv2.putText(
-                janela,
-                f"JOGADOR {3 - turno_jogador} GANHOU!",
-                (30, 450),
-                cv2.FONT_HERSHEY_PLAIN,
-                5.1,
-                COR_BRANCA,
-                ESPESSURA,
-            )
-            cv2.putText(
-                janela,
-                TEXTO_JOGAR_NOVAMENTE,
-                (270, 500),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                COR_AMARELA,
-                ESPESSURA,
-            )
-            cv2.putText(
-                janela,
-                TEXTO_SAIR,
-                (350, 550),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                COR_AMARELA,
-                ESPESSURA,
-            )
-
-            jogar_novamente = True
+            vitoria()
 
         if verifica_velha():
-            janela = janela_vazia.copy()
-            cv2.putText(
-                janela,
-                "DEU VELHA!",
-                (210, 450),
-                cv2.FONT_HERSHEY_PLAIN,
-                5.1,
-                COR_BRANCA,
-                ESPESSURA,
-            )
-            cv2.putText(
-                janela,
-                TEXTO_JOGAR_NOVAMENTE,
-                (270, 500),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                COR_AMARELA,
-                ESPESSURA,
-            )
-            cv2.putText(
-                janela,
-                TEXTO_SAIR,
-                (350, 550),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                COR_AMARELA,
-                ESPESSURA,
-            )
-
-            jogar_novamente = True
+            velha()
 
     cv2.destroyAllWindows()
 
